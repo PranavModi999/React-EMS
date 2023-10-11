@@ -1,0 +1,29 @@
+{
+  "name": "ems_pranavmodi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "nodemon node.js",
+    "compile": "babel components --presets @babel/react --out-dir public",
+    "watch": "babel components --presets @babel/react --out-dir public --watch --verbose",
+    "client": "npm run compile && npm run watch "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^3.12.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "graphql": "^16.8.1",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.5.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.15",
+    "@babel/preset-react": "^7.22.15",
+    "nodemon": "^3.0.1"
+  }
+}
