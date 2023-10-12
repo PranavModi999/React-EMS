@@ -1,5 +1,8 @@
+scalar GraphQLDate
+
 type Query {
   getAllEmployees: [Employee]
+  isEmployeeAlreadyExist(emp: EmployeeInput!): Employee
 }
 
 type Mutation {
@@ -11,7 +14,7 @@ type Employee {
   LastName: String!
   Age: Int!
   # TODO:covert to scalar date
-  DateOfJoining: String!
+  DateOfJoining: GraphQLDate!
   Title: String!
   Department: String!
   EmployeeType: String!
@@ -21,8 +24,7 @@ input EmployeeInput {
   FirstName: String!
   LastName: String!
   Age: Int!
-  # TODO:covert to scalar date
-  DateOfJoining: String!
+  DateOfJoining: GraphQLDate!
   Title: String!
   Department: String!
   EmployeeType: String!

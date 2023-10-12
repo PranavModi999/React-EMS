@@ -27,7 +27,7 @@ class EmployeeTable extends React.Component {
       style: cellStyle
     }, emp.Age), /*#__PURE__*/React.createElement("td", {
       style: cellStyle
-    }, emp.DateOfJoining), /*#__PURE__*/React.createElement("td", {
+    }, emp.DateOfJoining.toDateString()), /*#__PURE__*/React.createElement("td", {
       style: cellStyle
     }, emp.Title), /*#__PURE__*/React.createElement("td", {
       style: cellStyle

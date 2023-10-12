@@ -8,6 +8,11 @@ class EmployeeDirectory extends React.Component {
   async componentDidMount() {
     await this.fetchEmployees();
   }
+  jsonDateReviver(key, value) {
+    const dateRegex = new RegExp("^\\d\\d\\d\\d-\\d\\d-\\d\\d");
+    if (dateRegex.test(value)) return new Date(value);
+    return value;
+  }
   fetchEmployees = async () => {
     console.log("fetch called");
     const fetchQuery = `
@@ -35,7 +40,7 @@ class EmployeeDirectory extends React.Component {
         })
       });
       if (response.ok) {
-        const body = await response.json();
+        const body = JSON.parse(await response.text(), this.jsonDateReviver);
         console.log("Fetched employees:", body.data.getAllEmployees);
         this.setState({
           employees: body.data.getAllEmployees
@@ -48,26 +53,11 @@ class EmployeeDirectory extends React.Component {
     }
   };
   createNewEmployee = async emp => {
+    console.log("emp:", emp);
     const mutationQuery = `
-    mutation CreateNew {
-      createNewEmployee(emp: {
-        FirstName: "${emp.firstName}",
-        LastName: "${emp.lastName}",
-        Age: ${parseInt(emp.age)},
-        DateOfJoining: "${emp.dateOfJoining}",
-        Title: "${emp.title}",
-        Department: "${emp.department}",
-        EmployeeType: "${emp.employeeType}",
-        CurrentStatus: "1"
-      }) {
+    mutation CreateNew($emp:EmployeeInput!){
+      createNewEmployee(emp:$emp) {
         FirstName
-        LastName
-        Age
-        DateOfJoining
-        Title
-        Department
-        EmployeeType
-        CurrentStatus
       }
     }
   `;
@@ -78,7 +68,10 @@ class EmployeeDirectory extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          query: mutationQuery
+          query: mutationQuery,
+          variables: {
+            emp: emp
+          }
         })
       });
       if (response.ok) {

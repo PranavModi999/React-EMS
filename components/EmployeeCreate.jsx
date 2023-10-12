@@ -12,8 +12,10 @@ class EmployeeCreate extends React.Component {
     const formValues = {};
     new FormData(evt.target).forEach((value, key) => {
       // console.log(value, ":", key);
-      formValues[key] = value.trim();
+      if (key == "Age") formValues[key] = parseInt(value);
+      else formValues[key] = value.trim();
     });
+    formValues["CurrentStatus"] = "1";
 
     let error = "";
 
@@ -63,7 +65,7 @@ class EmployeeCreate extends React.Component {
             <input
               style={inputStyle}
               type="text"
-              name="firstName"
+              name="FirstName"
               id="firstName"
               placeholder="Enter first Name"
             />
@@ -75,7 +77,7 @@ class EmployeeCreate extends React.Component {
             <input
               style={inputStyle}
               type="text"
-              name="lastName"
+              name="LastName"
               id="lastName"
               placeholder="Enter last Name"
             />
@@ -87,7 +89,7 @@ class EmployeeCreate extends React.Component {
             <input
               style={inputStyle}
               type="number"
-              name="age"
+              name="Age"
               id="age"
               placeholder="Enter age"
             />
@@ -99,7 +101,7 @@ class EmployeeCreate extends React.Component {
             <input
               style={inputStyle}
               type="date"
-              name="dateOfJoining"
+              name="DateOfJoining"
               id="dateOfJoining"
               placeholder="Enter date of joining"
             />
@@ -108,7 +110,7 @@ class EmployeeCreate extends React.Component {
             <label style={labelStyle} htmlFor="title">
               Title:
             </label>
-            <select style={inputStyle} id="title" name="title">
+            <select style={inputStyle} id="title" name="Title">
               <option value="Employee">Employee</option>
               <option value="Manager">Manager</option>
               <option value="Director">Director</option>
@@ -119,7 +121,7 @@ class EmployeeCreate extends React.Component {
             <label style={labelStyle} htmlFor="department">
               Department:
             </label>
-            <select style={inputStyle} id="department" name="department">
+            <select style={inputStyle} id="department" name="Department">
               <option value="IT">IT</option>
               <option value="Marketing">Marketing</option>
               <option value="HR">HR</option>
@@ -127,14 +129,10 @@ class EmployeeCreate extends React.Component {
             </select>
           </div>
           <div>
-            <label
-              style={labelStyle}
-              htmlFor="employeeType"
-              name="employeeTyle"
-            >
+            <label style={labelStyle} htmlFor="employeeType">
               Employee Type:
             </label>
-            <select style={inputStyle} name="employeeType" id="employeeType">
+            <select style={inputStyle} name="EmployeeType" id="EmployeeType">
               <option value="FullTime">FullTime</option>
               <option value="PartTime">PartTime</option>
               <option value="Contract">Contract</option>

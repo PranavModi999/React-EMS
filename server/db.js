@@ -5,7 +5,6 @@ let db;
 
 const dbConnect = async () => {
   if (!db) {
-    console.log("mongo url:", process.env.MONGO_URL);
     const client = new MongoClient(process.env.MONGO_URL);
     await client.connect();
     db = client.db();

@@ -1,6 +1,6 @@
 const { ApolloServer } = require("apollo-server-express");
-const express = require("express");
 const { GraphQLScalarType } = require("graphql");
+const express = require("express");
 
 require("dotenv").config();
 
@@ -8,6 +8,20 @@ const fs = require("fs");
 
 const UserModel = require("./User/UserModel");
 const database = require("./db");
+
+const GraphQLDate = new GraphQLScalarType({
+  name: "GraphQLDate",
+  description: "A Date() type in GraphQL as a scalar",
+  parseValue(value) {
+    return new Date(value);
+  },
+  parseLiteral(ast) {
+    return ast.kind == Kind.STRING ? new Date(ast.value) : undefined;
+  },
+  serialize(value) {
+    return value.toISOString();
+  },
+});
 
 const resolvers = {
   Query: {
@@ -20,6 +34,7 @@ const resolvers = {
       return UserModel.createNewEmployee(emp);
     },
   },
+  GraphQLDate,
 };
 
 const app = express();

@@ -45,7 +45,7 @@ class EmployeeTable extends React.Component {
                 <td style={cellStyle}>{emp.FirstName}</td>
                 <td style={cellStyle}>{emp.LastName}</td>
                 <td style={cellStyle}>{emp.Age}</td>
-                <td style={cellStyle}>{emp.DateOfJoining}</td>
+                <td style={cellStyle}>{emp.DateOfJoining.toDateString()}</td>
                 <td style={cellStyle}>{emp.Title}</td>
                 <td style={cellStyle}>{emp.Department}</td>
                 <td style={cellStyle}>{emp.EmployeeType}</td>

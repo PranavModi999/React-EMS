@@ -10,8 +10,9 @@ class EmployeeCreate extends React.Component {
     const formValues = {};
     new FormData(evt.target).forEach((value, key) => {
       // console.log(value, ":", key);
-      formValues[key] = value.trim();
+      if (key == "Age") formValues[key] = parseInt(value);else formValues[key] = value.trim();
     });
+    formValues["CurrentStatus"] = "1";
     let error = "";
     if (formValues.firstName === "") error += "\n First name is required";
     if (formValues.lastName === "") error += "\n Last name is required";
@@ -52,7 +53,7 @@ class EmployeeCreate extends React.Component {
     }, "First Name:"), /*#__PURE__*/React.createElement("input", {
       style: inputStyle,
       type: "text",
-      name: "firstName",
+      name: "FirstName",
       id: "firstName",
       placeholder: "Enter first Name"
     })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -61,7 +62,7 @@ class EmployeeCreate extends React.Component {
     }, "Last Name:"), /*#__PURE__*/React.createElement("input", {
       style: inputStyle,
       type: "text",
-      name: "lastName",
+      name: "LastName",
       id: "lastName",
       placeholder: "Enter last Name"
     })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -70,7 +71,7 @@ class EmployeeCreate extends React.Component {
     }, "Age:"), /*#__PURE__*/React.createElement("input", {
       style: inputStyle,
       type: "number",
-      name: "age",
+      name: "Age",
       id: "age",
       placeholder: "Enter age"
     })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -79,7 +80,7 @@ class EmployeeCreate extends React.Component {
     }, "Date of joining:"), /*#__PURE__*/React.createElement("input", {
       style: inputStyle,
       type: "date",
-      name: "dateOfJoining",
+      name: "DateOfJoining",
       id: "dateOfJoining",
       placeholder: "Enter date of joining"
     })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
@@ -88,7 +89,7 @@ class EmployeeCreate extends React.Component {
     }, "Title:"), /*#__PURE__*/React.createElement("select", {
       style: inputStyle,
       id: "title",
-      name: "title"
+      name: "Title"
     }, /*#__PURE__*/React.createElement("option", {
       value: "Employee"
     }, "Employee"), /*#__PURE__*/React.createElement("option", {
@@ -103,7 +104,7 @@ class EmployeeCreate extends React.Component {
     }, "Department:"), /*#__PURE__*/React.createElement("select", {
       style: inputStyle,
       id: "department",
-      name: "department"
+      name: "Department"
     }, /*#__PURE__*/React.createElement("option", {
       value: "IT"
     }, "IT"), /*#__PURE__*/React.createElement("option", {
@@ -114,12 +115,11 @@ class EmployeeCreate extends React.Component {
       value: "Engineering"
     }, "Engineering"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
       style: labelStyle,
-      htmlFor: "employeeType",
-      name: "employeeTyle"
+      htmlFor: "employeeType"
     }, "Employee Type:"), /*#__PURE__*/React.createElement("select", {
       style: inputStyle,
-      name: "employeeType",
-      id: "employeeType"
+      name: "EmployeeType",
+      id: "EmployeeType"
     }, /*#__PURE__*/React.createElement("option", {
       value: "FullTime"
     }, "FullTime"), /*#__PURE__*/React.createElement("option", {
