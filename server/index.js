@@ -1,12 +1,13 @@
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
+const { GraphQLScalarType } = require("graphql");
+
+require("dotenv").config();
 
 const fs = require("fs");
 
 const UserModel = require("./User/UserModel");
 const database = require("./db");
-
-const PORT = 3000;
 
 const resolvers = {
   Query: {
@@ -37,8 +38,8 @@ async function startServer() {
 
   server.applyMiddleware({ app, path: "/graphql" });
 
-  app.listen(PORT, () =>
-    console.log(`Server started listening on port ${PORT}...`)
+  app.listen(process.env.PORT, () =>
+    console.log(`Server started listening on port ${process.env.PORT}...`)
   );
 }
 
