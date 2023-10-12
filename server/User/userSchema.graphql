@@ -2,7 +2,6 @@ scalar GraphQLDate
 
 type Query {
   getAllEmployees: [Employee]
-  isEmployeeAlreadyExist(emp: EmployeeInput!): Employee
 }
 
 type Mutation {
