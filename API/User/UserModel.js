@@ -1,4 +1,7 @@
-const { getEmployeeDbInstance } = require("../db");
+/* eslint-disable linebreak-style */
+/* eslint no-restricted-globals: "off" */
+
+const { getEmployeeDbInstance } = require('../db');
 
 const getAllEmployees = async () => {
   const instance = await getEmployeeDbInstance();
@@ -6,7 +9,7 @@ const getAllEmployees = async () => {
 };
 const createNewEmployee = async (emp) => {
   const instance = await getEmployeeDbInstance();
-  const employee = await instance.insertOne(emp);
+  await instance.insertOne(emp);
   return emp;
 };
 

@@ -12,7 +12,6 @@ type Employee {
   FirstName: String!
   LastName: String!
   Age: Int!
-  # TODO:covert to scalar date
   DateOfJoining: GraphQLDate!
   Title: String!
   Department: String!

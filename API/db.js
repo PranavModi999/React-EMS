@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const { MongoClient } = require("mongodb");
+/* eslint-disable linebreak-style */
+/* eslint no-restricted-globals: "off" */
+
+const { MongoClient } = require('mongodb');
 
 let db;
 
@@ -9,12 +11,12 @@ const dbConnect = async () => {
     await client.connect();
     db = client.db();
   }
-  console.log("Successfully connected to database!");
+  console.log('Successfully connected to database!');
 };
 
 const getEmployeeDbInstance = async () => {
   if (!db) await dbConnect();
-  return db.collection("employees");
+  return db.collection('employees');
 };
 
 module.exports = {
