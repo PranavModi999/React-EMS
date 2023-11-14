@@ -12,6 +12,7 @@
     }
   },
   "rules": {
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
     "linebreak-style": "off",
     "react/prop-types": "off"
   }

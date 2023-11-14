@@ -5,7 +5,6 @@
   },
   "rules": {
     "linebreak-style":"off",
-    "quotes":"warn",
-    "no-console": "off"
+    "quotes":[2,"double"]
   }
 }

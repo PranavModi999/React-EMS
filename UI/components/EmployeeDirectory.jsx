@@ -1,11 +1,8 @@
-/* eslint "react/react-in-jsx-scope": "off" */
-/* eslint-disable arrow-body-style */
-/* globals React ReactDOM */
-/* eslint "react/jsx-no-undef": "off" */
-/* eslint "no-alert": "off" */
+import EmployeeCreate from "./EmployeeCreate.jsx";
+import EmployeeSearch from "./EmployeeSearch.jsx";
+import EmployeeTable from "./EmployeeTable.jsx";
 
-// eslint-disable-next-line react/prefer-stateless-function
-class EmployeeDirectory extends React.Component {
+export default class EmployeeDirectory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,23 +106,3 @@ class EmployeeDirectory extends React.Component {
     );
   }
 }
-class EmployeeSearch extends React.Component {
-  render() {
-    const searchStyle = {
-      width: "96%",
-      padding: "0.5rem 10px",
-    };
-
-    return (
-      <input
-        style={searchStyle}
-        type="text"
-        name=""
-        placeholder="Enter employee to search"
-        id=""
-      />
-    );
-  }
-}
-
-ReactDOM.render(<EmployeeDirectory />, document.getElementById("contents"));

@@ -1,4 +1,4 @@
-class EmployeeTable extends React.Component {
+export default class EmployeeTable extends React.Component {
   constructor(props) {
     super(props);
   }

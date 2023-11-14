@@ -1,4 +1,4 @@
-class EmployeeCreate extends React.Component {
+export default class EmployeeCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
