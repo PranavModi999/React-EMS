@@ -1,3 +1,5 @@
+import React from "react";
+
 export default class EmployeeSearch extends React.Component {
   render() {
     const searchStyle = {
