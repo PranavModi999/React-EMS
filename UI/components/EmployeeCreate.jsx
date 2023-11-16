@@ -1,7 +1,10 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable import/extensions */
 import React from "react";
 
 import GraphQlQueries from "../server/graphQlQueries.js";
-import FieldSetWrapper from "./FieldSetWrapper.jsx";
 
 export default class EmployeeCreate extends React.Component {
   constructor(props) {
@@ -9,33 +12,35 @@ export default class EmployeeCreate extends React.Component {
     this.state = {
       error: "",
     };
+    this.addEmployeeHandler = this.addEmployeeHandler.bind(this);
   }
 
-  addEmployeeHandler = (evt) => {
+  addEmployeeHandler(evt) {
     evt.preventDefault();
 
     const formValues = {};
     new FormData(evt.target).forEach((value, key) => {
-      // console.log(value, ":", key);
-      if (key == "Age") formValues[key] = parseInt(value);
+      if (key === "Age") formValues[key] = parseInt(value, 10);
       else formValues[key] = value.trim();
     });
-    formValues["CurrentStatus"] = "1";
+    formValues.CurrentStatus = "1";
 
     let error = "";
 
-    if (formValues.firstName === "") error += "\n First name is required";
-    if (formValues.lastName === "") error += "\n Last name is required";
-    if (formValues.age > 70 || formValues.age < 20)
+    if (formValues.FirstName === "") error += "\n First name is required";
+    if (formValues.LastName === "") error += "\n Last name is required";
+    if (formValues.Age > 70 || formValues.Age < 20) {
       error += "\n Age must be a number between 20 to 70";
+    }
 
     if (error.length > 0) {
-      this.setState({ error: error });
+      this.setState({ error });
     } else {
       // this.props.onNewEmployeeClick(formValues);
       GraphQlQueries.createNewEmployee(formValues);
     }
-  };
+  }
+
   render() {
     const buttonStyle = {
       padding: "0.6rem 1rem",
@@ -57,12 +62,10 @@ export default class EmployeeCreate extends React.Component {
       color: "red",
     };
     return (
-      <FieldSetWrapper>
-        <section>
+      <section className="create-form">
+        <center>
           <h3>
-            <u>
-              <center>ADD EMPLOYEE</center>
-            </u>
+            <u>ADD EMPLOYEE</u>
           </h3>
           <form onSubmit={this.addEmployeeHandler}>
             <div>
@@ -153,8 +156,8 @@ export default class EmployeeCreate extends React.Component {
               Add Employee
             </button>
           </form>
-        </section>
-      </FieldSetWrapper>
+        </center>
+      </section>
     );
   }
 }

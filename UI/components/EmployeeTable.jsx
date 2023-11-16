@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable react/prefer-stateless-function */
 import React from "react";
 
 export default class EmployeeTable extends React.Component {
@@ -18,17 +23,9 @@ export default class EmployeeTable extends React.Component {
       "Actions",
     ];
 
-    const tableStyle = {
-      width: "100%",
-      borderCollapse: "collapse",
-    };
-    const cellStyle = {
-      border: "1px solid black",
-      padding: "8px",
-    };
     return (
-      <section>
-        <table style={tableStyle}>
+      <section className="employee-table-container">
+        <table className="employee-table">
           <caption>
             <h3>
               <u>EMPLOYEE LIST</u>
@@ -37,25 +34,34 @@ export default class EmployeeTable extends React.Component {
           <thead>
             <tr>
               {headerList.map((header, index) => (
-                <th key={index} style={cellStyle}>
-                  {header}
-                </th>
+                <th key={index}>{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {this.props.employees.map((emp, index) => (
               <tr key={index}>
-                <td style={cellStyle}>{emp.FirstName}</td>
-                <td style={cellStyle}>{emp.LastName}</td>
-                <td style={cellStyle}>{emp.Age}</td>
-                <td style={cellStyle}>{emp.DateOfJoining.toDateString()}</td>
-                <td style={cellStyle}>{emp.Title}</td>
-                <td style={cellStyle}>{emp.Department}</td>
-                <td style={cellStyle}>{emp.EmployeeType}</td>
-                <td style={cellStyle}>{emp.CurrentStatus}</td>
-                <td style={cellStyle}>
-                  <a href={`/#/empEdit/${emp.id}`}>Details</a>
+                <td>{emp.FirstName}</td>
+                <td>{emp.LastName}</td>
+                <td>{emp.Age}</td>
+                <td>{emp.DateOfJoining.toDateString()}</td>
+                <td>{emp.Title}</td>
+                <td>{emp.Department}</td>
+                <td>{emp.EmployeeType}</td>
+                <td>{emp.CurrentStatus}</td>
+                <td className="actions">
+                  <a href={`/#/empEdit/${emp.id}`} className="icon">
+                    <img src="/images/update.svg" alt="update" />
+                    update
+                  </a>
+                  <a
+                    href="#"
+                    onClick={() => this.props.onDeleteClick(emp.id)}
+                    className="icon"
+                  >
+                    <img src="/images/delete.svg" alt="delete" />
+                    delete
+                  </a>
                 </td>
               </tr>
             ))}

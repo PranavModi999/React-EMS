@@ -1,15 +1,20 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
+const path = require("path");
 
-require('dotenv').config();
+require("dotenv").config();
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT || 'http://localhost:3000/graphql';
+const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT || "http://localhost:3000/graphql";
 const env = { UI_API_ENDPOINT };
-app.get('/env.js', (req, res) => {
+
+app.get("/env.js", (req, res) => {
   res.send(`window.ENV = ${JSON.stringify(env)}`);
+});
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("public/index.html"));
 });
 const PORT = process.env.UI_SERVER_PORT || 8000;
 

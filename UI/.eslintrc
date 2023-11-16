@@ -3,17 +3,10 @@
   "env": {
     "browser": true
   },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   "rules": {
-    "import/extensions": ["error", "always", { "ignorePackages": true }],
+    "react/prop-types": "off",
     "linebreak-style": "off",
-    "react/prop-types": "off"
+    "quotes": [2, "double"],
+    "no-alert": "off"
   }
 }

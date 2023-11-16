@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/destructuring-assignment */
 import React from "react";
 
 export default class EmployeeSearch extends React.Component {
@@ -5,12 +8,14 @@ export default class EmployeeSearch extends React.Component {
     super(props);
     this.employeeTypeChangeHandler = this.employeeTypeChangeHandler.bind(this);
   }
+
   employeeTypeChangeHandler(evt) {
     this.props.onFilterChange(evt.target.value);
   }
+
   render() {
     const searchStyle = {
-      width: "96%",
+      width: "90%",
       padding: "0.5rem 10px",
     };
     const labelStyle = {
@@ -20,7 +25,7 @@ export default class EmployeeSearch extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <center>
         <label style={labelStyle} htmlFor="employeeType">
           Filter By Employee Type:
         </label>
@@ -36,7 +41,7 @@ export default class EmployeeSearch extends React.Component {
           <option value="Contract">Contract</option>
           <option value="Seasonal">Seasonal</option>
         </select>
-      </React.Fragment>
+      </center>
     );
   }
 }

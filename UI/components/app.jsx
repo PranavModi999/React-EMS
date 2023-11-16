@@ -1,17 +1,18 @@
-// eslint-disable-next-line react/prefer-stateless-function
-/* globals React */
-/* eslint "react/jsx-no-undef": "off" */
-
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/extensions */
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
+import {
+  HashRouter, Redirect, Route, Switch,
+} from "react-router-dom";
 
+import EmployeeCreate from "./EmployeeCreate.jsx";
 import EmployeeDetail from "./EmployeeDetails.jsx";
 import EmployeeDirectory from "./EmployeeDirectory.jsx";
-import EmployeeCreate from "./EmployeeCreate.jsx";
-import EmployeeEdit from "./EmployeeEdit.jsx";
 import Navbar from "./Navbar.jsx";
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class App extends React.Component {
   render() {
     return (
@@ -21,9 +22,8 @@ export default class App extends React.Component {
           <Switch>
             <Redirect exact from="/" to="/directory" />
             <Route path="/directory" component={EmployeeDirectory} />
-            <Route path="/empDetail" component={EmployeeDetail} />
             <Route path="/empCreate" component={EmployeeCreate} />
-            <Route path="/empEdit/:id" component={EmployeeEdit} />
+            <Route path="/empEdit/:id" component={EmployeeDetail} />
           </Switch>
         </div>
       </HashRouter>

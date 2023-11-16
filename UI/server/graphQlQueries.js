@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 function jsonDateReviver(key, value) {
   const dateRegex = new RegExp("^\\d\\d\\d\\d-\\d\\d-\\d\\d");
   if (dateRegex.test(value)) return new Date(value);
@@ -25,20 +26,16 @@ const getEmployeeById = async (id) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: fetchEmployeeQuery,
-        variables: { id: id },
+        variables: { id },
       }),
     });
 
     if (response.ok) {
       const body = JSON.parse(await response.text(), jsonDateReviver);
-      console.log("single employees:", body.data);
       return body.data.getEmployeeById;
-      //   this.setState({ employees: body.data.getAllEmployees });
-    } else {
-      console.error("GraphQL request failed with status:", response.status);
     }
   } catch (error) {
-    console.error("An error occurred while fetching employees:", error);
+    throw error;
   }
 };
 
@@ -65,25 +62,20 @@ const fetchEmployeesByFilter = async (filterType) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: fetchQuery,
-        variables: { filterType: filterType },
+        variables: { filterType },
       }),
     });
 
     if (response.ok) {
       const body = JSON.parse(await response.text(), jsonDateReviver);
-      console.log("Fetched employees:", body.data.getAllEmployees);
       return body.data.getAllEmployees;
-      //   this.setState({ employees: body.data.getAllEmployees });
-    } else {
-      console.error("GraphQL request failed with status:", response.status);
     }
   } catch (error) {
-    console.error("An error occurred while fetching employees:", error);
+    throw error;
   }
 };
 
 const createNewEmployee = async (emp) => {
-  console.log("emp:", emp);
   const mutationQuery = `
     mutation CreateNew($emp:EmployeeInput!){
       createNewEmployee(emp:$emp) {
@@ -95,22 +87,81 @@ const createNewEmployee = async (emp) => {
     const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: mutationQuery, variables: { emp: emp } }),
+      body: JSON.stringify({ query: mutationQuery, variables: { emp } }),
     });
 
     if (response.ok) {
-      const body = await response.json();
-      console.log("Created employee:", body.data.createNewEmployee);
+      await response.json();
       alert("Employee added successfully!");
       return true;
-      //   this.fetchEmployees(this.state.employeeFilter);
-    } else {
-      return false;
-      //   console.error("GraphQL request failed with status:", response.status);
     }
+    return false;
   } catch (error) {
-    console.error("An error occurred while creating a new employee:", error);
+    throw error;
   }
 };
 
-module.exports = { createNewEmployee, fetchEmployeesByFilter, getEmployeeById };
+const deleteEmployeeById = async (id) => {
+  const deleteByIdQuery = `
+    mutation CreateNew($id: String!){
+      deleteEmployeeById(id:$id)
+    }
+  `;
+  try {
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: deleteByIdQuery, variables: { id } }),
+    });
+
+    if (response.ok) {
+      await response.json();
+      alert("Employee deleted successfully!");
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateEmployee = async (emp) => {
+  const updateQuery = `
+    mutation update($emp: EmployeeInput!){
+      updateEmployeeById(emp:$emp){
+        id
+        FirstName
+        LastName
+        Age
+        DateOfJoining
+        Title
+        Department
+        EmployeeType
+        CurrentStatus
+      }
+    }
+  `;
+  try {
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: updateQuery, variables: { emp } }),
+    });
+
+    if (response.ok) {
+      await response.json();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  fetchEmployeesByFilter,
+  deleteEmployeeById,
+  createNewEmployee,
+  getEmployeeById,
+  updateEmployee,
+};
