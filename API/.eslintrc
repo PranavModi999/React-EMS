@@ -4,7 +4,8 @@
     "node": true
   },
   "rules": {
-    "linebreak-style":"off",
-    "quotes":[2,"double"]
+    "linebreak-style": "off",
+    "quotes": [2, "double"],
+    "no-console": "warn"
   }
 }

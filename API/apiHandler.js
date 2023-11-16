@@ -7,7 +7,8 @@ const GraphQLDate = require("./graphQlDate");
 
 const resolvers = {
   Query: {
-    getAllEmployees: () => UserModel.getAllEmployees(),
+    getAllEmployees: (_, { filter }) => UserModel.getAllEmployees(filter),
+    getEmployeeById: (_, { id }) => UserModel.getEmployeeById(id),
   },
   Mutation: {
     createNewEmployee: (_, { emp }) => UserModel.createNewEmployee(emp),

@@ -1,5 +1,8 @@
 import React from "react";
 
+import GraphQlQueries from "../server/graphQlQueries.js";
+import FieldSetWrapper from "./FieldSetWrapper.jsx";
+
 export default class EmployeeCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +32,8 @@ export default class EmployeeCreate extends React.Component {
     if (error.length > 0) {
       this.setState({ error: error });
     } else {
-      this.props.onNewEmployeeClick(formValues);
+      // this.props.onNewEmployeeClick(formValues);
+      GraphQlQueries.createNewEmployee(formValues);
     }
   };
   render() {
@@ -53,102 +57,104 @@ export default class EmployeeCreate extends React.Component {
       color: "red",
     };
     return (
-      <section>
-        <h3>
-          <u>
-            <center>ADD EMPLOYEE</center>
-          </u>
-        </h3>
-        <form onSubmit={this.addEmployeeHandler}>
-          <div>
-            <label style={labelStyle} htmlFor="firstName">
-              First Name:
-            </label>
-            <input
-              style={inputStyle}
-              type="text"
-              name="FirstName"
-              id="firstName"
-              placeholder="Enter first Name"
-            />
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="lastName">
-              Last Name:
-            </label>
-            <input
-              style={inputStyle}
-              type="text"
-              name="LastName"
-              id="lastName"
-              placeholder="Enter last Name"
-            />
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="age">
-              Age:
-            </label>
-            <input
-              style={inputStyle}
-              type="number"
-              name="Age"
-              id="age"
-              placeholder="Enter age"
-            />
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="dateOfJoining">
-              Date of joining:
-            </label>
-            <input
-              style={inputStyle}
-              type="date"
-              name="DateOfJoining"
-              id="dateOfJoining"
-              placeholder="Enter date of joining"
-            />
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="title">
-              Title:
-            </label>
-            <select style={inputStyle} id="title" name="Title">
-              <option value="Employee">Employee</option>
-              <option value="Manager">Manager</option>
-              <option value="Director">Director</option>
-              <option value="VP">VP</option>
-            </select>
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="department">
-              Department:
-            </label>
-            <select style={inputStyle} id="department" name="Department">
-              <option value="IT">IT</option>
-              <option value="Marketing">Marketing</option>
-              <option value="HR">HR</option>
-              <option value="Engineering">Engineering</option>
-            </select>
-          </div>
-          <div>
-            <label style={labelStyle} htmlFor="employeeType">
-              Employee Type:
-            </label>
-            <select style={inputStyle} name="EmployeeType" id="EmployeeType">
-              <option value="FullTime">FullTime</option>
-              <option value="PartTime">PartTime</option>
-              <option value="Contract">Contract</option>
-              <option value="Seasonal">Seasonal</option>
-            </select>
-          </div>
-          <span style={errorStyle}>
-            <pre>{this.state.error}</pre>
-          </span>
-          <button type="submit" style={buttonStyle}>
-            Add Employee
-          </button>
-        </form>
-      </section>
+      <FieldSetWrapper>
+        <section>
+          <h3>
+            <u>
+              <center>ADD EMPLOYEE</center>
+            </u>
+          </h3>
+          <form onSubmit={this.addEmployeeHandler}>
+            <div>
+              <label style={labelStyle} htmlFor="firstName">
+                First Name:
+              </label>
+              <input
+                style={inputStyle}
+                type="text"
+                name="FirstName"
+                id="firstName"
+                placeholder="Enter first Name"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="lastName">
+                Last Name:
+              </label>
+              <input
+                style={inputStyle}
+                type="text"
+                name="LastName"
+                id="lastName"
+                placeholder="Enter last Name"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="age">
+                Age:
+              </label>
+              <input
+                style={inputStyle}
+                type="number"
+                name="Age"
+                id="age"
+                placeholder="Enter age"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="dateOfJoining">
+                Date of joining:
+              </label>
+              <input
+                style={inputStyle}
+                type="date"
+                name="DateOfJoining"
+                id="dateOfJoining"
+                placeholder="Enter date of joining"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="title">
+                Title:
+              </label>
+              <select style={inputStyle} id="title" name="Title">
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Director">Director</option>
+                <option value="VP">VP</option>
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="department">
+                Department:
+              </label>
+              <select style={inputStyle} id="department" name="Department">
+                <option value="IT">IT</option>
+                <option value="Marketing">Marketing</option>
+                <option value="HR">HR</option>
+                <option value="Engineering">Engineering</option>
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="employeeType">
+                Employee Type:
+              </label>
+              <select style={inputStyle} name="EmployeeType" id="EmployeeType">
+                <option value="FullTime">FullTime</option>
+                <option value="PartTime">PartTime</option>
+                <option value="Contract">Contract</option>
+                <option value="Seasonal">Seasonal</option>
+              </select>
+            </div>
+            <span style={errorStyle}>
+              <pre>{this.state.error}</pre>
+            </span>
+            <button type="submit" style={buttonStyle}>
+              Add Employee
+            </button>
+          </form>
+        </section>
+      </FieldSetWrapper>
     );
   }
 }

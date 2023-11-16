@@ -4,6 +4,7 @@ export default class EmployeeTable extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const headerList = [
       "FirstName",
@@ -14,6 +15,7 @@ export default class EmployeeTable extends React.Component {
       "Department",
       "EmployeeType",
       "CurrentStatus",
+      "Actions",
     ];
 
     const tableStyle = {
@@ -52,6 +54,9 @@ export default class EmployeeTable extends React.Component {
                 <td style={cellStyle}>{emp.Department}</td>
                 <td style={cellStyle}>{emp.EmployeeType}</td>
                 <td style={cellStyle}>{emp.CurrentStatus}</td>
+                <td style={cellStyle}>
+                  <a href={`/#/empEdit/${emp.id}`}>Details</a>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -4,10 +4,10 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "nodemon -w uiserver.js uiserver.js",
+    "start": "nodemon -w server/index.js",
     "compile": "npx webpack --mode production",
     "watch": "webpack --watch",
-    "client": "npm run compile && npm run watch",
+    "client": "npm run watch & npm run start",
     "lint": "eslint . --ext js,jsx --ignore-pattern public"
   },
   "keywords": [],
@@ -21,6 +21,7 @@
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-router-dom": "^4.3.1",
     "whatwg-fetch": "^3.6.19"
   },
   "devDependencies": {

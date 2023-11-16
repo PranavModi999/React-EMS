@@ -1,7 +1,8 @@
 scalar GraphQLDate
 
 type Query {
-  getAllEmployees: [Employee]
+  getAllEmployees(filter: String): [Employee]
+  getEmployeeById(id: String): Employee
 }
 
 type Mutation {
@@ -9,6 +10,7 @@ type Mutation {
 }
 
 type Employee {
+  id: ID
   FirstName: String!
   LastName: String!
   Age: Int!
@@ -19,6 +21,7 @@ type Employee {
   CurrentStatus: String!
 }
 input EmployeeInput {
+  id: ID
   FirstName: String!
   LastName: String!
   Age: Int!
