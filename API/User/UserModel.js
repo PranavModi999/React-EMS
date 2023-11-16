@@ -16,10 +16,29 @@ const getAllEmployees = async (filter) => {
   if (filter) return instance.find({ EmployeeType: filter }).toArray();
   return instance.find({}).toArray();
 };
+
 const getEmployeeById = async (id) => {
+  console.log(typeof id);
   const instance = await getEmployeeDbInstance();
 
   const data = await instance.findOne({ id: parseInt(id, 10) });
+  return data;
+};
+
+const deleteEmployeeById = async (id) => {
+  const instance = await getEmployeeDbInstance();
+
+  const data = await instance.deleteOne({ id: parseInt(id, 10) });
+  return data;
+};
+
+const updateEmployeeById = async (emp) => {
+  const instance = await getEmployeeDbInstance();
+  emp.id = parseInt(emp.id, 10);
+  const data = await instance.findOneAndUpdate(
+    { id: parseInt(emp.id, 10) },
+    { $set: emp },
+  );
   return data;
 };
 
@@ -31,7 +50,9 @@ const createNewEmployee = async (emp) => {
 };
 
 module.exports = {
-  getEmployeeById,
+  updateEmployeeById,
+  deleteEmployeeById,
   createNewEmployee,
+  getEmployeeById,
   getAllEmployees,
 };

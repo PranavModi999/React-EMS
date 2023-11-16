@@ -11,7 +11,9 @@ const resolvers = {
     getEmployeeById: (_, { id }) => UserModel.getEmployeeById(id),
   },
   Mutation: {
+    updateEmployeeById: (_, { emp }) => UserModel.updateEmployeeById(emp),
     createNewEmployee: (_, { emp }) => UserModel.createNewEmployee(emp),
+    deleteEmployeeById: (_, { id }) => UserModel.deleteEmployeeById(id),
   },
   GraphQLDate,
 };
