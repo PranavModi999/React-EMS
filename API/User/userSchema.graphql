@@ -1,16 +1,22 @@
 scalar GraphQLDate
 
 type Query {
+  #fetch all employees based on employeeType filter, pass no filter to fetch all employees
   getAllEmployees(filter: String): [Employee]
+  #fetch single employee with matching emp id
   getEmployeeById(id: String): Employee
 }
 
 type Mutation {
+  #update single employee with matching emp id
   updateEmployeeById(emp: EmployeeInput!): Employee
+  #create new employee based on emp passed as query parameter
   createNewEmployee(emp: EmployeeInput!): Employee
+  #delete a single employee based on emp id
   deleteEmployeeById(id: String!): String
 }
 
+#defining employee object
 type Employee {
   id: ID
   FirstName: String!
@@ -22,6 +28,7 @@ type Employee {
   EmployeeType: String!
   CurrentStatus: String!
 }
+#defining employee input
 input EmployeeInput {
   id: ID
   FirstName: String!
