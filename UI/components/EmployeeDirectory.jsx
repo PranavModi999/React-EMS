@@ -18,24 +18,29 @@ export default class EmployeeDirectory extends React.Component {
       employees: [],
       employeeFilter: "",
     };
+    // bind functions
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
     this.updateEmployeeList = this.updateEmployeeList.bind(this);
   }
 
   async componentDidMount() {
+    // fetch employees on component mount
     this.updateEmployeeList();
   }
 
+  // delete employee in database with matching id
   async onDeleteClick(id) {
     try {
       await GraphQlQueries.deleteEmployeeById(id);
       this.updateEmployeeList();
+      alert("Employee deleted successfully!");
     } catch (error) {
       throw error;
     }
   }
 
+  // fetch employee based on new filter and update state
   async onFilterChange(filter) {
     this.setState({
       employees: await GraphQlQueries.fetchEmployeesByFilter(filter),

@@ -11,15 +11,20 @@ class EmployeeDetails extends React.Component {
     this.state = {
       emp: null,
     };
+    // bind functions
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateEmployeeHandler = this.updateEmployeeHandler.bind(this);
   }
 
   async componentDidMount() {
+    // get id route parameter
     const { id } = this.props.match.params;
 
     try {
+      // returns employee with matching id from database
       const data = await GraphQLQueries.getEmployeeById(id);
+
+      // update state
       this.setState({ emp: data });
     } catch (error) {
       throw error;
@@ -29,14 +34,15 @@ class EmployeeDetails extends React.Component {
   async updateEmployeeHandler(event) {
     event.preventDefault();
     try {
+      // updates employee from database
       await GraphQLQueries.updateEmployee(this.state.emp);
       alert("Employee updated Successfully");
-      // this.setState({ emp: data });
     } catch (error) {
       throw error;
     }
   }
 
+  // updats state when any input field changes
   handleInputChange(event) {
     const { name, value } = event.target;
     this.setState(prevState => ({

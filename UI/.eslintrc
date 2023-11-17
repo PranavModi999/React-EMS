@@ -7,6 +7,7 @@
     "react/prop-types": "off",
     "linebreak-style": "off",
     "quotes": [2, "double"],
+    "no-console": "error",
     "no-alert": "off"
   }
 }

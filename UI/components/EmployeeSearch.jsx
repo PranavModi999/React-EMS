@@ -9,6 +9,7 @@ export default class EmployeeSearch extends React.Component {
     this.employeeTypeChangeHandler = this.employeeTypeChangeHandler.bind(this);
   }
 
+  // invoke parent method to handle filter change
   employeeTypeChangeHandler(evt) {
     this.props.onFilterChange(evt.target.value);
   }

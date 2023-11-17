@@ -33,12 +33,15 @@ export default class EmployeeTable extends React.Component {
           </caption>
           <thead>
             <tr>
+              {/* creater table header based on headerList dynamically */}
               {headerList.map((header, index) => (
                 <th key={index}>{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
+            {/* display data based on employee object of list passed by parent in
+            prop */}
             {this.props.employees.map((emp, index) => (
               <tr key={index}>
                 <td>{emp.FirstName}</td>

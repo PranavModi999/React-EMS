@@ -6,7 +6,6 @@ import ReactDOM from "react-dom";
 import {
   HashRouter, Redirect, Route, Switch,
 } from "react-router-dom";
-
 import EmployeeCreate from "./EmployeeCreate.jsx";
 import EmployeeDetail from "./EmployeeDetails.jsx";
 import EmployeeDirectory from "./EmployeeDirectory.jsx";
@@ -16,9 +15,11 @@ import Navbar from "./Navbar.jsx";
 export default class App extends React.Component {
   render() {
     return (
+      // hashrouter to allow nav bar links to work
       <HashRouter>
         <div>
           <Navbar />
+          {/* by default redirects to employe list else provides paths to switch */}
           <Switch>
             <Redirect exact from="/" to="/directory" />
             <Route path="/directory" component={EmployeeDirectory} />

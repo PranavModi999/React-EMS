@@ -18,6 +18,7 @@ export default class EmployeeCreate extends React.Component {
   addEmployeeHandler(evt) {
     evt.preventDefault();
 
+    // get form data
     const formValues = {};
     new FormData(evt.target).forEach((value, key) => {
       if (key === "Age") formValues[key] = parseInt(value, 10);
@@ -27,6 +28,7 @@ export default class EmployeeCreate extends React.Component {
 
     let error = "";
 
+    // validate data
     if (formValues.FirstName === "") error += "\n First name is required";
     if (formValues.LastName === "") error += "\n Last name is required";
     if (formValues.Age > 70 || formValues.Age < 20) {
@@ -36,7 +38,7 @@ export default class EmployeeCreate extends React.Component {
     if (error.length > 0) {
       this.setState({ error });
     } else {
-      // this.props.onNewEmployeeClick(formValues);
+      // create new employee
       GraphQlQueries.createNewEmployee(formValues);
     }
   }
