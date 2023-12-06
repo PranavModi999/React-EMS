@@ -5,129 +5,6 @@
 body {
   width: 100vw;
 }
-nav {
-  position: sticky;
-  transition: top 0.3s ease-in-out;
-  top: 0;
-  transform-style: preserve-3d;
-  display: flex;
-  z-index: 2;
-  align-items: center;
-  padding: 24px 100px;
-  flex-wrap: nowrap;
-  color: #292b2c;
-  background: #f1f1f1;
-  justify-content: space-between;
-}
-.start-container {
-  display: flex;
-  font-size: 1.2rem;
-  column-gap: 12px;
-}
-nav ul {
-  display: flex;
-  justify-content: center;
-}
-nav ul li {
-  list-style: none;
-  margin-left: 20px;
-}
-nav ul li a {
-  text-decoration: none;
-  padding: 6px 15px;
-  text-transform: uppercase;
-  color: #292b2c;
-  border-radius: 20px;
-}
-nav ul li a:hover {
-  text-decoration: none;
-  padding: 6px 15px;
-  color: #fff;
-  box-shadow: 0px 2px 5px gray;
-  background: #292b2c;
-  transition: 0.2s ease-in-out;
-}
-
-.create-form {
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 60%;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2), -5px -5px 5px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  margin: 0px 12px;
-  padding: 0px 20px;
-  border: none;
-  border-radius: 20px;
-  background-color: #292b2c;
-  color: #f1f1f1;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-button:hover {
-  opacity: 0.8;
-}
-
-button:active {
-  opacity: 0.6;
-}
-input {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #333;
-}
-
-.create-form form {
-  margin-top: 1rem;
-}
-
-.employee-table-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: top;
-  align-items: center;
-  margin: 2rem auto;
-  width: 90%;
-  height: 840px;
-}
-
-.employee-table {
-  /* margin-top: 3%; */
-  border-radius: 12px;
-  width: 40vw;
-  border-collapse: separate;
-  border-spacing: 0px 16px;
-}
-
-.employee-table thead {
-  background-color: #292b2c;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.employee-table th {
-  /* border: 2px solid lightgray; */
-  margin: 0;
-  padding: 25px 30px;
-}
-
-.employee-table td {
-  border-radius: 3px;
-  padding: 25px 30px;
-}
-
-.employee-table tbody tr {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
-  transition: 0.15s background-color ease-in;
-}
-
 .icon {
   color: black;
   width: 2rem;
@@ -135,6 +12,17 @@ input {
   flex-direction: column;
   list-style: none;
   text-decoration: none;
+}
+.employee-table {
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0px 16px;
+}
+
+.employee-table tbody tr {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.15s background-color ease-in;
 }
 .actions {
   display: flex;

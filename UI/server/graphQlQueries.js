@@ -105,7 +105,6 @@ const createNewEmployee = async (emp) => {
 
     if (response.ok) {
       await response.json();
-      alert("Employee added successfully!");
       return true;
     }
     return false;

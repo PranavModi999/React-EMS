@@ -4,6 +4,7 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React from "react";
+import { Col, Row, Table } from "react-bootstrap";
 
 export default class EmployeeTable extends React.Component {
   constructor(props) {
@@ -24,53 +25,51 @@ export default class EmployeeTable extends React.Component {
     ];
 
     return (
-      <section className="employee-table-container">
-        <table className="employee-table">
-          <caption>
-            <h3>
-              <u>EMPLOYEE LIST</u>
-            </h3>
-          </caption>
-          <thead>
-            <tr>
-              {/* creater table header based on headerList dynamically */}
-              {headerList.map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {/* display data based on employee object of list passed by parent in
-            prop */}
-            {this.props.employees.map((emp, index) => (
-              <tr key={index}>
-                <td>{emp.FirstName}</td>
-                <td>{emp.LastName}</td>
-                <td>{emp.Age}</td>
-                <td>{emp.DateOfJoining.toDateString()}</td>
-                <td>{emp.Title}</td>
-                <td>{emp.Department}</td>
-                <td>{emp.EmployeeType}</td>
-                <td>{emp.CurrentStatus}</td>
-                <td className="actions">
-                  <a href={`/#/empEdit/${emp.id}`} className="icon">
-                    <img src="/images/update.svg" alt="update" />
-                    update
-                  </a>
-                  <a
-                    href="#"
-                    onClick={() => this.props.onDeleteClick(emp.id)}
-                    className="icon"
-                  >
-                    <img src="/images/delete.svg" alt="delete" />
-                    delete
-                  </a>
-                </td>
+      <Row className="justify-content-center align-middle">
+        <Col xs={10}>
+          <Table className="employee-table text-center align-middle" hover>
+            <thead className="employee-table-header text-uppercase">
+              <tr>
+                {headerList.map((header, index) => (
+                  <th key={index}>{header}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+            <tbody>
+              {this.props.employees.map((emp, index) => (
+                <tr key={index}>
+                  <td>{emp.FirstName}</td>
+                  <td>{emp.LastName}</td>
+                  <td>{emp.Age}</td>
+                  <td>{new Date(emp.DateOfJoining).toDateString()}</td>
+                  <td>{emp.Title}</td>
+                  <td>{emp.Department}</td>
+                  <td>{emp.EmployeeType}</td>
+                  <td>{emp.CurrentStatus}</td>
+                  <td className="actions">
+                    <a href={`/#/empEdit/${emp.id}`} className="icon m-1">
+                      <img
+                        src="/images/update.svg"
+                        className="justify-content-center align-middle"
+                        alt="update"
+                      />
+                      Update
+                    </a>
+                    <a
+                      href="#"
+                      onClick={() => this.props.onDeleteClick(emp.id)}
+                      className="icon m-1"
+                    >
+                      <img src="/images/delete.svg" alt="delete" />
+                      Delete
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     );
   }
 }

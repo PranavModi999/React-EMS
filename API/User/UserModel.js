@@ -30,7 +30,6 @@ const getEmployeeById = async (id) => {
 // delete a single employee with matching id from database
 const deleteEmployeeById = async (id) => {
   const instance = await getEmployeeDbInstance();
-
   const data = await instance.deleteOne({ id: parseInt(id, 10) });
   return data;
 };
