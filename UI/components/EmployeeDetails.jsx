@@ -23,7 +23,7 @@ class EmployeeDetails extends React.Component {
     try {
       // returns employee with matching id from database
       const data = await GraphQLQueries.getEmployeeById(id);
-
+      console.log(data);
       // update state
       this.setState({ emp: data });
     } catch (error) {
@@ -81,8 +81,9 @@ class EmployeeDetails extends React.Component {
     const formattedDateOfJoining = new Date(emp.DateOfJoining)
       .toISOString()
       .split("T")[0];
+      const formattedDateOfBirth = new Date(emp.DOB).toISOString().split("T")[0] ;
 
-    return (
+      return (
       <section className="create-form">
         <center>
           <h3>
@@ -142,6 +143,20 @@ class EmployeeDetails extends React.Component {
                 value={formattedDateOfJoining}
                 id="dateOfJoining"
                 placeholder="Enter date of joining"
+                disabled
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="DOB">
+                Date of Birth:
+              </label>
+              <input
+                style={inputStyle}
+                type="date"
+                name="DOB"
+                value={formattedDateOfBirth}
+                id="DOB"
+                placeholder="Enter date of Birth"
                 disabled
               />
             </div>

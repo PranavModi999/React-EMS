@@ -22,6 +22,7 @@ export default class EmployeeCreate extends React.Component {
     const formValues = {};
     new FormData(evt.target).forEach((value, key) => {
       if (key === "Age") formValues[key] = parseInt(value, 10);
+      
       else formValues[key] = value.trim();
     });
     formValues.CurrentStatus = "1";
@@ -116,6 +117,18 @@ export default class EmployeeCreate extends React.Component {
                 name="DateOfJoining"
                 id="dateOfJoining"
                 placeholder="Enter date of joining"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="DOB">
+                Date of Birth:
+              </label>
+              <input
+                style={inputStyle}
+                type="date"
+                name="DOB"
+                id="DOB"
+                placeholder="Enter date of Birth"
               />
             </div>
             <div>

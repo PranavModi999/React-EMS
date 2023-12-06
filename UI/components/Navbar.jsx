@@ -15,6 +15,9 @@ export default class Navbar extends React.Component {
           <li>
             <a href="/#/empCreate">Employee Create</a>
           </li>
+          <li>
+            <a href="/#/retired">Upcoming Retirement</a>
+          </li>
         </ul>
       </nav>
     );

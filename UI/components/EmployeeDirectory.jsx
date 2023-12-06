@@ -17,6 +17,7 @@ export default class EmployeeDirectory extends React.Component {
     this.state = {
       employees: [],
       employeeFilter: "",
+      retired:[],
     };
     // bind functions
     this.onDeleteClick = this.onDeleteClick.bind(this);
@@ -32,9 +33,16 @@ export default class EmployeeDirectory extends React.Component {
   // delete employee in database with matching id
   async onDeleteClick(id) {
     try {
-      await GraphQlQueries.deleteEmployeeById(id);
-      this.updateEmployeeList();
-      alert("Employee deleted successfully!");
+      const result = await GraphQlQueries.deleteEmployeeById(id);
+    
+      if(result.success===true){
+         await this.updateEmployeeList();
+        alert(result.message);
+        
+      }else{
+        alert(result.message);
+      }
+    
     } catch (error) {
       throw error;
     }
@@ -42,9 +50,16 @@ export default class EmployeeDirectory extends React.Component {
 
   // fetch employee based on new filter and update state
   async onFilterChange(filter) {
+    if(filter==="Retired"){
+      this.setState({
+        employees: await GraphQlQueries.getRetirementData(),
+      })
+    }
+    else{
     this.setState({
       employees: await GraphQlQueries.fetchEmployeesByFilter(filter),
     });
+  }
   }
 
   async updateEmployeeList() {

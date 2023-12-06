@@ -18,6 +18,7 @@ const getEmployeeById = async (id) => {
         LastName
         Age
         DateOfJoining
+        DOB
         Title
         Department
         EmployeeType
@@ -57,6 +58,7 @@ const fetchEmployeesByFilter = async (filterType) => {
         LastName
         Age
         DateOfJoining
+        DOB
         Title
         Department
         EmployeeType
@@ -119,7 +121,10 @@ const deleteEmployeeById = async (id) => {
   // mutation that taked id as query parameter and deletes matching employee
   const deleteByIdQuery = `
     mutation CreateNew($id: String!){
-      deleteEmployeeById(id:$id)
+      deleteEmployeeById(id:$id){
+        success
+        message
+      }
     }
   `;
   try {
@@ -130,14 +135,29 @@ const deleteEmployeeById = async (id) => {
     });
 
     if (response.ok) {
-      await response.json();
-      return true;
+      const result = await response.json();
+      console.log(result);
+      if (result.data && result.data.deleteEmployeeById) {
+        const { success, message } = result.data.deleteEmployeeById;
+
+        if (success) {
+          // Employee deleted successfully
+          return { success: true, message };
+        } else {
+          // Return message for unsuccessful deletion
+          return { success: false, message };
+        }
+      }
     }
-    return false;
+
+    // Return false for other errors
+    return { success: false, message: "Error deleting employee." };
   } catch (error) {
     throw error;
   }
 };
+     
+
 
 // function to update employee in database
 const updateEmployee = async (emp) => {
@@ -151,6 +171,7 @@ const updateEmployee = async (emp) => {
         LastName
         Age
         DateOfJoining
+        DOB
         Title
         Department
         EmployeeType
@@ -175,10 +196,51 @@ const updateEmployee = async (emp) => {
   }
 };
 
+const getRetirementData = async () => {
+  const retirementQuery = `
+    query {
+      getRetirementData {
+        id
+        FirstName
+        LastName
+        Age
+        DateOfJoining
+        DOB
+        Title
+        Department
+        EmployeeType
+        CurrentStatus
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: retirementQuery }),
+    });
+
+    if (!response.ok) {
+      console.error(`GraphQL error: ${response.status}`);
+      return;
+    }
+
+    const data = await response.json();
+    const retirementData = data.data.getRetirementData;
+
+    console.log("Retirement data:", retirementData);
+
+    return retirementData;
+  } catch (error) {
+    console.error(`Retirement data could not be fetched: ${error}`);
+  }
+};
 module.exports = {
   fetchEmployeesByFilter,
   deleteEmployeeById,
   createNewEmployee,
   getEmployeeById,
   updateEmployee,
+  getRetirementData
 };

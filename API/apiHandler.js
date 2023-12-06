@@ -11,6 +11,7 @@ const resolvers = {
   Query: {
     getAllEmployees: (_, { filter }) => UserModel.getAllEmployees(filter),
     getEmployeeById: (_, { id }) => UserModel.getEmployeeById(id),
+    getRetirementData: ()=> UserModel.getRetirementData(),
   },
   Mutation: {
     updateEmployeeById: (_, { emp }) => UserModel.updateEmployeeById(emp),

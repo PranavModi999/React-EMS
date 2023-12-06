@@ -10,6 +10,7 @@ import EmployeeCreate from "./EmployeeCreate.jsx";
 import EmployeeDetail from "./EmployeeDetails.jsx";
 import EmployeeDirectory from "./EmployeeDirectory.jsx";
 import Navbar from "./Navbar.jsx";
+import Retirement from "./Retirement.jsx";
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class App extends React.Component {
@@ -25,6 +26,7 @@ export default class App extends React.Component {
             <Route path="/directory" component={EmployeeDirectory} />
             <Route path="/empCreate" component={EmployeeCreate} />
             <Route path="/empEdit/:id" component={EmployeeDetail} />
+            <Route path="/retired" component={Retirement}></Route>
           </Switch>
         </div>
       </HashRouter>

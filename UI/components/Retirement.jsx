@@ -1,16 +1,37 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable react/prefer-stateless-function */
 import React from "react";
-
-export default class EmployeeTable extends React.Component {
+import GraphQlQueries from "../server/graphQlQueries.js";
+export default class Retirement extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      employees: [],
+    };
+    this.getRetired = this.getRetired.bind(this);
+  }
+
+  async componentDidMount() {
+    this.getRetired();
+  }
+
+  async getRetired() {
+    console.log("get retired data");
+    this.setState({
+      employees: await GraphQlQueries.getRetirementData(),
+    });
   }
 
   render() {
+    const employeeList = this.state.employees;
+
+    // Check if the employeeList is empty or null
+    if (!employeeList || employeeList.length === 0) {
+      return (
+        <section className="employee-table-container">
+          No employee data available.
+        </section>
+      );
+    }
+
     const headerList = [
       "FirstName",
       "LastName",
@@ -20,7 +41,7 @@ export default class EmployeeTable extends React.Component {
       "Department",
       "EmployeeType",
       "CurrentStatus",
-      "Actions",
+    
     ];
 
     return (
@@ -41,8 +62,8 @@ export default class EmployeeTable extends React.Component {
           </thead>
           <tbody>
             {/* display data based on employee object of list passed by parent in
-            prop */}
-            {this.props.employees.map((emp, index) => (
+                prop */}
+            {employeeList.map((emp, index) => (
               <tr key={index}>
                 <td>{emp.FirstName}</td>
                 <td>{emp.LastName}</td>
@@ -52,20 +73,6 @@ export default class EmployeeTable extends React.Component {
                 <td>{emp.Department}</td>
                 <td>{emp.EmployeeType}</td>
                 <td>{emp.CurrentStatus}</td>
-                <td className="actions">
-                  <a href={`/#/empEdit/${emp.id}`} className="icon">
-                    <img src="/images/update.svg" alt="update" />
-                    update
-                  </a>
-                  <a
-                    href="#"
-                    onClick={() => this.props.onDeleteClick(emp.id)}
-                    className="icon"
-                  >
-                    <img src="/images/delete.svg" alt="delete" />
-                    delete
-                  </a>
-                </td>
               </tr>
             ))}
           </tbody>
