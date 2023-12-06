@@ -46,6 +46,7 @@ class EmployeeDetails extends React.Component {
       // updates employee from database
       // eslint-disable-next-line react/no-access-state-in-setstate
       const result = await GraphQLQueries.updateEmployee(this.state.emp);
+      console.log(this.state.emp);
       this.setState({
         show: result,
       });
@@ -67,6 +68,12 @@ class EmployeeDetails extends React.Component {
 
   render() {
     const { emp } = this.state;
+    // TODO: change to emp.DateOfJoining
+    const DateOfBirth = new Date(2000, 5, 11);
+
+    const month = DateOfBirth.getMonth() + 1;
+    const year = DateOfBirth.getFullYear();
+    const day = DateOfBirth.getDate();
     if (!this.state.emp) {
       return <div>Loading...</div>;
     }
@@ -191,7 +198,23 @@ class EmployeeDetails extends React.Component {
                   <option value="Engineering">Engineering</option>
                 </Form.Select>
               </Col>
-
+              <Col>
+                <p>Time left in retirement</p>
+                <Row xs={6} className="justify-content-center">
+                  <Col>
+                    <p className="fw-bold my-0">YEARS</p>
+                    <p>{year}</p>
+                  </Col>
+                  <Col>
+                    <p className="fw-bold my-0">MONTHS</p>
+                    <p>{month}</p>
+                  </Col>
+                  <Col>
+                    <p className="fw-bold my-0">DAYS</p>
+                    <p>{day}</p>
+                  </Col>
+                </Row>
+              </Col>
               <Col xs={5}>
                 <label htmlFor="currentStatus">Current Status:</label>
                 <Form.Select
