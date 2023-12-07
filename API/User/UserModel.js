@@ -19,40 +19,44 @@ const getAllEmployees = async (filter) => {
   return instance.find({}).toArray();
 };
 
-// get a single employee with matching id from database
 const getEmployeeById = async (id) => {
   const instance = await getEmployeeDbInstance();
 
   const data = await instance.findOne({ id: parseInt(id, 10) });
 
-  const millisecondsInDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+  if (data && data.DOB) {
+    // Assuming DOB is the person's date of birth
+    const DOB = new Date(data.DOB);
+    const currentDate = new Date();
 
-   const daysLeft = Math.floor(timeLeft / millisecondsInDay);
-     // Calculate retirement details
-  const dateOfJoining = new Date(data.DateOfJoining);
-  const ageAtJoining = data.Age;
-  const retirementDate = new Date(dateOfJoining);
-  retirementDate.setFullYear(retirementDate.getFullYear() + ageAtJoining);
+    // Calculate the age in years
+    const ageInYears = currentDate.getFullYear() - DOB.getFullYear();
 
-  const currentDate = new Date();
-  const timeLeft = retirementDate - currentDate;
+    // Calculate the date when the person will turn 65
+    const turning65Date = new Date(DOB);
+    turning65Date.setFullYear(DOB.getFullYear() + 65);
 
-  // Calculate days, months, and years left
-  const yearsLeft = Math.floor(daysLeft / 365);
-  const monthsLeft = Math.floor((daysLeft%365)/12);
-  const days = Math.floor((daysLeft%365)%12);
- 
-  
-  // Add retirement details to the data object
-  data.RetirementTime = {
-    days: days,
-    months: monthsLeft,
-    years: yearsLeft,
-  };
+    // Calculate the remaining days until turning 65
+    const remainingDaysUntil65 = Math.ceil((turning65Date - currentDate) / (1000 * 60 * 60 * 24));
 
-   console.log(data);
+    // Calculate days, months, and years left
+    const yearsLeft = Math.floor(remainingDaysUntil65 / 365);
+    const monthsLeft = Math.floor((remainingDaysUntil65 % 365) / 30);
+    const days = Math.floor((remainingDaysUntil65 % 365) % 30);
+
+    // Add retirement details to the data object
+    data.RetirementTime = {
+      days: days,
+      months: monthsLeft,
+      years: yearsLeft,
+    };
+
+    console.log(data);
+  }
+
   return data;
 };
+
 
 // delete a single employee with matching id from database
 const deleteEmployeeById = async (id) => {
