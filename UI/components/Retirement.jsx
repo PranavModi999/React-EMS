@@ -1,5 +1,7 @@
 import React from "react";
 import GraphQlQueries from "../server/graphQlQueries.js";
+import { Col, Row, Table } from "react-bootstrap";
+
 export default class Retirement extends React.Component {
   constructor(props) {
     super(props);
@@ -45,39 +47,33 @@ export default class Retirement extends React.Component {
     ];
 
     return (
-      <section className="employee-table-container">
-        <table className="employee-table">
-          <caption>
-            <h3>
-              <u>EMPLOYEE LIST</u>
-            </h3>
-          </caption>
-          <thead>
-            <tr>
-              {/* creater table header based on headerList dynamically */}
-              {headerList.map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {/* display data based on employee object of list passed by parent in
-                prop */}
-            {employeeList.map((emp, index) => (
-              <tr key={index}>
-                <td>{emp.FirstName}</td>
-                <td>{emp.LastName}</td>
-                <td>{emp.Age}</td>
-                <td>{new Date(emp.DateOfJoining).toDateString()}</td>
-                <td>{emp.Title}</td>
-                <td>{emp.Department}</td>
-                <td>{emp.EmployeeType}</td>
-                <td>{emp.CurrentStatus}</td>
+      <Row className="justify-content-center align-middle">
+        <Col xs={10}>
+          <Table className="employee-table text-center align-middle" hover>
+            <thead className="employee-table-header text-uppercase">
+              <tr>
+                {headerList.map((header, index) => (
+                  <th key={index}>{header}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+            <tbody>
+              {employeeList.map((emp, index) => (
+                <tr key={index}>
+                  <td>{emp.FirstName}</td>
+                  <td>{emp.LastName}</td>
+                  <td>{emp.Age}</td>
+                  <td>{new Date(emp.DateOfJoining).toDateString()}</td>
+                  <td>{emp.Title}</td>
+                  <td>{emp.Department}</td>
+                  <td>{emp.EmployeeType}</td>
+                  <td>{emp.CurrentStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     );
   }
 }

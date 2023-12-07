@@ -26,6 +26,7 @@ export default class EmployeeDirectory extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("clicked");
     // fetch employees on component mount
     this.updateEmployeeList();
   }
@@ -34,8 +35,9 @@ export default class EmployeeDirectory extends React.Component {
   async onDeleteClick(id) {
     try {
       const result = await GraphQlQueries.deleteEmployeeById(id);
-    
+       console.log(result);
       if(result.success===true){
+
          await this.updateEmployeeList();
         alert(result.message);
         

@@ -2,6 +2,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 import React from "react";
+import {
+  Button, Col, Form, Row, Toast,
+} from "react-bootstrap";
 
 import GraphQLQueries from "../server/graphQlQueries";
 
@@ -9,11 +12,13 @@ class EmployeeDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      show: false,
       emp: null,
     };
     // bind functions
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateEmployeeHandler = this.updateEmployeeHandler.bind(this);
+    this.toggleShow = this.toggleShow.bind(this);
   }
 
   async componentDidMount() {
@@ -24,19 +29,34 @@ class EmployeeDetails extends React.Component {
       // returns employee with matching id from database
       const data = await GraphQLQueries.getEmployeeById(id);
       console.log(data);
+      // console.log(data.RetirementTime);
+
       // update state
       this.setState({ emp: data });
+
+      // console.log(this.state.emp.RetirementTime.years+"yo");
+      // console.log(this.state.emp.RetirementTime.days+"yo");
+      // console.log(this.state.emp.RetirementTime.months+"yo");
+      console.log("hello");
     } catch (error) {
       throw error;
     }
+  }
+
+  toggleShow() {
+    this.setState(st => ({ show: !st.show }));
   }
 
   async updateEmployeeHandler(event) {
     event.preventDefault();
     try {
       // updates employee from database
-      await GraphQLQueries.updateEmployee(this.state.emp);
-      alert("Employee updated Successfully");
+      // eslint-disable-next-line react/no-access-state-in-setstate
+      const result = await GraphQLQueries.updateEmployee(this.state.emp);
+      console.log(this.state.emp);
+      this.setState({
+        show: result,
+      });
     } catch (error) {
       throw error;
     }
@@ -55,186 +75,187 @@ class EmployeeDetails extends React.Component {
 
   render() {
     const { emp } = this.state;
-    const buttonStyle = {
-      padding: "0.6rem 1rem",
-      color: "fff",
-      cursor: "pointer",
-      margin: "12px",
-    };
-    const labelStyle = {
-      display: "inline-block",
-      width: "15%",
-    };
-    const inputStyle = {
-      width: "40%",
-      padding: "4px",
-      margin: "10px",
-    };
-    const errorStyle = {
-      margin: "1rem",
-      display: "block",
-      color: "red",
-    };
+    // TODO: change to emp.DateOfJoining
+    // const {years,months,days} = this.state.emp.RetirementTime;
     if (!this.state.emp) {
       return <div>Loading...</div>;
     }
     const formattedDateOfJoining = new Date(emp.DateOfJoining)
       .toISOString()
       .split("T")[0];
-      const formattedDateOfBirth = new Date(emp.DOB).toISOString().split("T")[0] ;
-
-      return (
-      <section className="create-form">
-        <center>
-          <h3>
-            <u>EMPLOYEE DETAILS</u>
-          </h3>
-          <form onSubmit={this.updateEmployeeHandler}>
-            <div>
-              <label style={labelStyle} htmlFor="firstName">
-                First Name:
-              </label>
-              <input
-                style={inputStyle}
-                type="text"
-                name="FirstName"
-                id="firstName"
-                value={emp.FirstName}
-                placeholder="Enter first Name"
-                disabled
-              />
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="lastName">
-                Last Name:
-              </label>
-              <input
-                style={inputStyle}
-                type="text"
-                name="LastName"
-                id="lastName"
-                value={emp.LastName}
-                placeholder="Enter last Name"
-                disabled
-              />
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="age">
-                Age:
-              </label>
-              <input
-                style={inputStyle}
-                type="number"
-                name="Age"
-                id="age"
-                value={emp.Age}
-                placeholder="Enter age"
-                disabled
-              />
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="dateOfJoining">
-                Date of joining:
-              </label>
-              <input
-                style={inputStyle}
-                type="date"
-                name="DateOfJoining"
-                value={formattedDateOfJoining}
-                id="dateOfJoining"
-                placeholder="Enter date of joining"
-                disabled
-              />
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="DOB">
-                Date of Birth:
-              </label>
-              <input
-                style={inputStyle}
-                type="date"
-                name="DOB"
-                value={formattedDateOfBirth}
-                id="DOB"
-                placeholder="Enter date of Birth"
-                disabled
-              />
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="employeeType">
-                Employee Type:
-              </label>
-              <select
-                style={inputStyle}
-                name="EmployeeType"
-                value={emp.EmployeeType}
-                id="EmployeeType"
-                disabled
-              >
-                <option value="FullTime">FullTime</option>
-                <option value="PartTime">PartTime</option>
-                <option value="Contract">Contract</option>
-                <option value="Seasonal">Seasonal</option>
-              </select>
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="title">
-                Title:
-              </label>
-              <select
-                style={inputStyle}
-                id="title"
-                value={emp.Title}
-                onChange={this.handleInputChange}
-                name="Title"
-              >
-                <option value="Employee">Employee</option>
-                <option value="Manager">Manager</option>
-                <option value="Director">Director</option>
-                <option value="VP">VP</option>
-              </select>
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="department">
-                Department:
-              </label>
-              <select
-                style={inputStyle}
-                id="department"
-                onChange={this.handleInputChange}
-                value={emp.Department}
-                name="Department"
-              >
-                <option value="IT">IT</option>
-                <option value="Marketing">Marketing</option>
-                <option value="HR">HR</option>
-                <option value="Engineering">Engineering</option>
-              </select>
-            </div>
-            <div>
-              <label style={labelStyle} htmlFor="currentStatus">
-                Current Status:
-              </label>
-              <select
-                style={inputStyle}
-                id="currentStatus"
-                value={emp.CurrentStatus}
-                onChange={this.handleInputChange}
-                name="CurrentStatus"
-              >
-                <option value="1">Working</option>
-                <option value="0">Retired</option>
-              </select>
-            </div>
-            <span style={errorStyle}>
-              <pre>{this.state.error}</pre>
-            </span>
-            <button type="submit" style={buttonStyle}>
-              Update Employee
-            </button>
-          </form>
-        </center>
-      </section>
+    return (
+      <Row className="justify-content-center">
+        <Col className="col-10">
+          <center>
+            <h3 className="mb-3">
+              <u>UPDATE EMPLOYEE</u>
+            </h3>
+            <Form
+              noValidate
+              validated={this.state.validated}
+              onSubmit={this.updateEmployeeHandler}
+            >
+              <Row className="justify-content-center text-start my-2">
+                <Form.Group as={Col} md="4">
+                  <Form.Label className="ms-3">First Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="FirstName"
+                    id="firstName"
+                    defaultValue={emp.FirstName}
+                    placeholder="Enter first name"
+                    disabled
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    invalid first name
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Last Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="LastName"
+                    id="lastName"
+                    defaultValue={emp.LastName}
+                    placeholder="Enter last name"
+                    disabled
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    invalid last name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row className="justify-content-center text-start my-2">
+                <Form.Group as={Col} md="4">
+                  <Form.Label className="ms-3">Age:</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="Age"
+                    id="age"
+                    defaultValue={emp.Age}
+                    placeholder="Enter age"
+                    disabled
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Age must be between 20 to 70
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Joining Date:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="DateOfJoining"
+                    id="dateOfJoining"
+                    defaultValue={formattedDateOfJoining}
+                    placeholder="Enter joining Date"
+                    disabled
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    invalid date of joining
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Col xs={5} className="my-2">
+                <label htmlFor="employeeType">Employee Type:</label>
+                <Form.Select
+                  name="EmployeeType"
+                  id="EmployeeType"
+                  defaultValue={emp.EmployeeType}
+                  disabled
+                >
+                  <option value="FullTime">FullTime</option>
+                  <option value="PartTime">PartTime</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Seasonal">Seasonal</option>
+                  <Form.Control.Feedback type="invalid">
+                    select employee type
+                  </Form.Control.Feedback>
+                </Form.Select>
+              </Col>
+              <Col xs={5} className="my-2">
+                <label htmlFor="title">Title:</label>
+                <Form.Select
+                  id="title"
+                  name="Title"
+                  defaultValue={emp.Title}
+                  onChange={this.handleInputChange}
+                >
+                  <option value="Employee">Employee</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Director">Director</option>
+                  <option value="VP">VP</option>
+                </Form.Select>
+              </Col>
+              <Col xs={5} className="my-2">
+                <label htmlFor="department" defaultValue={emp.Department}>
+                  Department:
+                </label>
+                <Form.Select
+                  id="department"
+                  name="Department"
+                  onChange={this.handleInputChange}
+                >
+                  <option value="IT">IT</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="HR">HR</option>
+                  <option value="Engineering">Engineering</option>
+                </Form.Select>
+              </Col>
+              <Col>
+                <p>Time left in retirement</p>
+                <Row xs={6} className="justify-content-center">
+                  <Col>
+                    <p className="fw-bold my-0">YEARS</p>
+                    <p>{emp.RetirementTime.years}</p>
+                  </Col>
+                  <Col>
+                    <p className="fw-bold my-0">MONTHS</p>
+                    <p>{emp.RetirementTime.months}</p>
+                  </Col>
+                  <Col>
+                    <p className="fw-bold my-0">DAYS</p>
+                    <p>{emp.RetirementTime.days}</p>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={5}>
+                <label htmlFor="currentStatus">Current Status:</label>
+                <Form.Select
+                  id="currentStatus"
+                  defaultValue={emp.CurrentStatus}
+                  onChange={this.handleInputChange}
+                  name="CurrentStatus"
+                >
+                  <option value="1">Working</option>
+                  <option value="0">Retired</option>
+                </Form.Select>
+              </Col>
+              <span>
+                <pre>{this.state.error}</pre>
+              </span>
+              <Button type="submit" variant="dark">
+                Update Employee
+              </Button>
+            </Form>
+            <Toast
+              bg="info"
+              show={this.state.show}
+              onClose={this.toggleShow}
+              className="m-5 position-absolute bottom-0 end-0"
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto">Updated</strong>
+              </Toast.Header>
+              <Toast.Body>Employee updated successfully</Toast.Body>
+            </Toast>
+          </center>
+        </Col>
+      </Row>
     );
   }
 }

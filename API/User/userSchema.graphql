@@ -4,7 +4,7 @@ type Query {
   #fetch all employees based on employeeType filter, pass no filter to fetch all employees
   getAllEmployees(filter: String): [Employee]
   #fetch single employee with matching emp id
-  getEmployeeById(id: String): Employee
+  getEmployeeById(id: String): EmployeeDetails
 
   getRetirementData:[Employee]
 }
@@ -22,6 +22,8 @@ type DeleteEmployeeResponse {
   success: Boolean
   message: String
 }
+
+
 #defining employee object
 type Employee {
   id: ID
@@ -60,4 +62,10 @@ type EmployeeDetails{
   Department: String!
   EmployeeType: String!
   CurrentStatus: String!
+  RetirementTime: RetirementTime!
+}
+type RetirementTime {
+  years: String!
+  months: String!
+  days: String!
 }

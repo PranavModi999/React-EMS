@@ -24,6 +24,33 @@ const getEmployeeById = async (id) => {
   const instance = await getEmployeeDbInstance();
 
   const data = await instance.findOne({ id: parseInt(id, 10) });
+
+  const millisecondsInDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+
+   const daysLeft = Math.floor(timeLeft / millisecondsInDay);
+     // Calculate retirement details
+  const dateOfJoining = new Date(data.DateOfJoining);
+  const ageAtJoining = data.Age;
+  const retirementDate = new Date(dateOfJoining);
+  retirementDate.setFullYear(retirementDate.getFullYear() + ageAtJoining);
+
+  const currentDate = new Date();
+  const timeLeft = retirementDate - currentDate;
+
+  // Calculate days, months, and years left
+  const yearsLeft = Math.floor(daysLeft / 365);
+  const monthsLeft = Math.floor((daysLeft%365)/12);
+  const days = Math.floor((daysLeft%365)%12);
+ 
+  
+  // Add retirement details to the data object
+  data.RetirementTime = {
+    days: days,
+    months: monthsLeft,
+    years: yearsLeft,
+  };
+
+   console.log(data);
   return data;
 };
 
@@ -83,6 +110,8 @@ const getRetirementData = async () => {
   retirementDOBPlusSixMonths.setMonth(retirementDOBPlusSixMonths.getMonth() + 6);
 
   // Filter employees based on DOB
+  console.log(retirementAge);
+  console.log(retirementDOB,retirementDOBPlusSixMonths);
   const retirementData = await document
     .find({
       DOB: {

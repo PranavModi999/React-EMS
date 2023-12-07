@@ -14,6 +14,9 @@ import Retirement from "./Retirement.jsx";
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class App extends React.Component {
+  componentDidMount(){
+    console.log("app");
+  }
   render() {
     return (
       // hashrouter to allow nav bar links to work
@@ -26,7 +29,7 @@ export default class App extends React.Component {
             <Route path="/directory" component={EmployeeDirectory} />
             <Route path="/empCreate" component={EmployeeCreate} />
             <Route path="/empEdit/:id" component={EmployeeDetail} />
-            <Route path="/retired" component={Retirement}></Route>
+            <Route path="/retired" component={Retirement}/>
           </Switch>
         </div>
       </HashRouter>
