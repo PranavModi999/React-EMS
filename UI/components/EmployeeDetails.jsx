@@ -52,6 +52,7 @@ class EmployeeDetails extends React.Component {
     try {
       // updates employee from database
       // eslint-disable-next-line react/no-access-state-in-setstate
+      console.log("updating..",this.state.emp);
       const result = await GraphQLQueries.updateEmployee(this.state.emp);
       console.log(this.state.emp);
       this.setState({
@@ -65,12 +66,14 @@ class EmployeeDetails extends React.Component {
   // updats state when any input field changes
   handleInputChange(event) {
     const { name, value } = event.target;
-    this.setState(prevState => ({
-      emp: {
-        ...prevState.emp,
-        [name]: value,
-      },
-    }));
+    if (name !== 'RetirementTime') {
+      this.setState(prevState => ({
+        emp: {
+          ...prevState.emp,
+          [name]: value,
+        },
+      }));
+    }
   }
 
   render() {

@@ -23,37 +23,27 @@ const getEmployeeById = async (id) => {
   const instance = await getEmployeeDbInstance();
 
   const data = await instance.findOne({ id: parseInt(id, 10) });
-
+  console.log(data);
   if (data && data.DOB) {
     // Assuming DOB is the person's date of birth
-    const DOB = new Date(data.DOB);
-    const currentDate = new Date();
+    const today = new Date();
+    const retirementAge = 65;
+    const yearsLeft = retirementAge - (today.getFullYear() - data.DOB.getFullYear());
+    let monthsLeft = 11 - today.getMonth() + data.DOB.getMonth();
+    let daysLeft = data.DOB.getDate() - today.getDate();
 
-    // Calculate the age in years
-    const ageInYears = currentDate.getFullYear() - DOB.getFullYear();
-
-    // Calculate the date when the person will turn 65
-    const turning65Date = new Date(DOB);
-    turning65Date.setFullYear(DOB.getFullYear() + 65);
-
-    // Calculate the remaining days until turning 65
-    const remainingDaysUntil65 = Math.ceil((turning65Date - currentDate) / (1000 * 60 * 60 * 24));
-
-    // Calculate days, months, and years left
-    const yearsLeft = Math.floor(remainingDaysUntil65 / 365);
-    const monthsLeft = Math.floor((remainingDaysUntil65 % 365) / 30);
-    const days = Math.floor((remainingDaysUntil65 % 365) % 30);
-
+    if(daysLeft<0) daysLeft=0;
+    if(monthsLeft<0) monthsLeft=0;
     // Add retirement details to the data object
     data.RetirementTime = {
-      days: days,
+      days: daysLeft,
       months: monthsLeft,
       years: yearsLeft,
     };
 
-    console.log(data);
+    
   }
-
+  console.log(data);
   return data;
 };
 
