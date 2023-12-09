@@ -25,13 +25,14 @@ const getEmployeeById = async (id) => {
   const data = await instance.findOne({ id: parseInt(id, 10) });
   console.log(data);
   if (data && data.DOB) {
-    // Assuming DOB is the person's date of birth
+    
     const today = new Date();
     const retirementAge = 65;
-    const yearsLeft = retirementAge - (today.getFullYear() - data.DOB.getFullYear());
+    let yearsLeft = retirementAge - (today.getFullYear() - data.DOB.getFullYear());
     let monthsLeft = 11 - today.getMonth() + data.DOB.getMonth();
     let daysLeft = data.DOB.getDate() - today.getDate();
 
+    if(yearsLeft<0) yearsLeft=0;
     if(daysLeft<0) daysLeft=0;
     if(monthsLeft<0) monthsLeft=0;
     // Add retirement details to the data object
