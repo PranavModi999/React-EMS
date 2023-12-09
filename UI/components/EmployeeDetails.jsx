@@ -52,7 +52,7 @@ class EmployeeDetails extends React.Component {
     try {
       // updates employee from database
       // eslint-disable-next-line react/no-access-state-in-setstate
-      console.log("updating..",this.state.emp);
+      // console.log("updating.."+ this.state.emp);
       const result = await GraphQLQueries.updateEmployee(this.state.emp);
       console.log(this.state.emp);
       this.setState({
