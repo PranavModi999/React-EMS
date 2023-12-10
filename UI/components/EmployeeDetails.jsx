@@ -2,9 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 import React from "react";
-import {
-  Button, Col, Form, Row, Toast,
-} from "react-bootstrap";
+import { Button, Col, Form, Row, Toast } from "react-bootstrap";
 
 import GraphQLQueries from "../server/graphQlQueries";
 
@@ -28,16 +26,18 @@ class EmployeeDetails extends React.Component {
     try {
       // returns employee with matching id from database
       const data = await GraphQLQueries.getEmployeeById(id);
+      console.log(data);
 
-      // update state
       this.setState({ emp: data });
+
+      console.log("hello");
     } catch (error) {
       throw error;
     }
   }
 
   toggleShow() {
-    this.setState(st => ({ show: !st.show }));
+    this.setState((st) => ({ show: !st.show }));
   }
 
   async updateEmployeeHandler(event) {
@@ -45,8 +45,22 @@ class EmployeeDetails extends React.Component {
     try {
       // updates employee from database
       // eslint-disable-next-line react/no-access-state-in-setstate
-      const result = await GraphQLQueries.updateEmployee(this.state.emp);
-      console.log(this.state.emp);
+      // console.log("updating.."+ this.state.emp);
+      const current = this.state.emp;
+      const employeetoUpdate = {
+        id: current.id,
+        FirstName: current.FirstName,
+        LastName: current.LastName,
+        Age: current.Age,
+        DateOfJoining: current.DateOfJoining,
+        DOB: current.DOB,
+        Title: current.Title,
+        Department: current.Department,
+        EmployeeType: current.EmployeeType,
+        CurrentStatus: current.CurrentStatus,
+      };
+      const result = await GraphQLQueries.updateEmployee(employeetoUpdate);
+    
       this.setState({
         show: result,
       });
@@ -58,7 +72,8 @@ class EmployeeDetails extends React.Component {
   // updats state when any input field changes
   handleInputChange(event) {
     const { name, value } = event.target;
-    this.setState(prevState => ({
+
+    this.setState((prevState) => ({
       emp: {
         ...prevState.emp,
         [name]: value,
@@ -69,11 +84,7 @@ class EmployeeDetails extends React.Component {
   render() {
     const { emp } = this.state;
     // TODO: change to emp.DateOfJoining
-    const DateOfBirth = new Date(2000, 5, 11);
-
-    const month = DateOfBirth.getMonth() + 1;
-    const year = DateOfBirth.getFullYear();
-    const day = DateOfBirth.getDate();
+    // const {years,months,days} = this.state.emp.RetirementTime;
     if (!this.state.emp) {
       return <div>Loading...</div>;
     }
@@ -203,15 +214,15 @@ class EmployeeDetails extends React.Component {
                 <Row xs={6} className="justify-content-center">
                   <Col>
                     <p className="fw-bold my-0">YEARS</p>
-                    <p>{year}</p>
+                    <p>{emp.RetirementTime.years}</p>
                   </Col>
                   <Col>
                     <p className="fw-bold my-0">MONTHS</p>
-                    <p>{month}</p>
+                    <p>{emp.RetirementTime.months}</p>
                   </Col>
                   <Col>
                     <p className="fw-bold my-0">DAYS</p>
-                    <p>{day}</p>
+                    <p>{emp.RetirementTime.days}</p>
                   </Col>
                 </Row>
               </Col>

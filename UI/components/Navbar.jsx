@@ -16,6 +16,9 @@ export default class Navbar extends React.Component {
           <Nav.Item>
             <Nav.Link href="/#/empCreate">Employee Create</Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/#/retired">Upcoming Retirement</Nav.Link>
+          </Nav.Item>
         </Nav>
       </BootstrapNavbar>
     );

@@ -4,7 +4,9 @@ type Query {
   #fetch all employees based on employeeType filter, pass no filter to fetch all employees
   getAllEmployees(filter: String): [Employee]
   #fetch single employee with matching emp id
-  getEmployeeById(id: String): Employee
+  getEmployeeById(id: String): EmployeeDetails
+
+  getRetirementData:[Employee]
 }
 
 type Mutation {
@@ -13,8 +15,14 @@ type Mutation {
   #create new employee based on emp passed as query parameter
   createNewEmployee(emp: EmployeeInput!): Employee
   #delete a single employee based on emp id
-  deleteEmployeeById(id: String!): String
+  deleteEmployeeById(id: String!): DeleteEmployeeResponse
 }
+
+type DeleteEmployeeResponse {
+  success: Boolean
+  message: String
+}
+
 
 #defining employee object
 type Employee {
@@ -23,6 +31,7 @@ type Employee {
   LastName: String!
   Age: Int!
   DateOfJoining: GraphQLDate!
+  DOB: GraphQLDate!
   Title: String!
   Department: String!
   EmployeeType: String!
@@ -35,8 +44,28 @@ input EmployeeInput {
   LastName: String!
   Age: Int!
   DateOfJoining: GraphQLDate!
+   DOB: GraphQLDate!
   Title: String!
   Department: String!
   EmployeeType: String!
   CurrentStatus: String!
+}
+
+type EmployeeDetails{
+  id: ID
+  FirstName: String!
+  LastName: String!
+  Age: Int!
+  DateOfJoining: GraphQLDate!
+   DOB: GraphQLDate!
+  Title: String!
+  Department: String!
+  EmployeeType: String!
+  CurrentStatus: String!
+  RetirementTime: RetirementTime!
+}
+type RetirementTime {
+  years: String!
+  months: String!
+  days: String!
 }

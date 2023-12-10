@@ -28,6 +28,14 @@ export default class EmployeeCreate extends React.Component {
   addEmployeeHandler(evt) {
     evt.preventDefault();
 
+    // get form data
+    const formValues = {};
+    new FormData(evt.target).forEach((value, key) => {
+      if (key === "Age") formValues[key] = parseInt(value, 10);
+      
+      else formValues[key] = value.trim();
+    });
+    formValues.CurrentStatus = "1";
     const form = evt.currentTarget;
 
     if (form.checkValidity() === false) {
@@ -127,6 +135,19 @@ export default class EmployeeCreate extends React.Component {
                     invalid date of joining
                   </Form.Control.Feedback>
                 </Form.Group>
+                
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="DOB"
+                    id="DOB"
+                    placeholder="Enter Date of Birth"
+                    required
+                  />
+                
+                </Form.Group>
+
               </Row>
               <Col xs={5} className="my-2">
                 <label htmlFor="title">Title:</label>

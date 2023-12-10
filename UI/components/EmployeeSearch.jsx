@@ -34,6 +34,7 @@ export default class EmployeeSearch extends React.Component {
             <option value="PartTime">PartTime</option>
             <option value="Contract">Contract</option>
             <option value="Seasonal">Seasonal</option>
+            <option value="Retired">Retirement</option>
           </Form.Select>
         </Col>
       </Row>
